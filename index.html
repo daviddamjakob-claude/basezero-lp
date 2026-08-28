@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>basezero — the governed knowledge layer</title>
+<meta name="description" content="basezero is a knowledge graph that turns individual knowledge into organizational advantage: ingested from the tools you already use, resolved into one structure, permissioned at the level of the fact." />
+<style>
+  :root{
+    --bg:#0E0E13;
+    --surface:#15151D;
+    --surface-2:#1A1A24;
+    --line:rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.14);
+    --text:#F4F4F8;
+    --text-2:#C3C3D2;
+    --muted:#8C8CA0;
+    --faint:#61616F;
+    --accent:#6E5BF6;
+    --accent-bright:#9887FF;
+    --radius:18px;
+    --maxw:1160px;
+    --sans:"Inter","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",ui-monospace,"JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;line-height:1.65;overflow-x:hidden;
+  }
+  a{color:inherit}
+  h1,h2,h3,h4{margin:0;letter-spacing:-.025em;line-height:1.1;font-weight:600}
+  p{margin:0}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
+    background:rgba(14,14,19,.72);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:17px;text-decoration:none}
+  .nav-links{display:flex;align-items:center;gap:28px;font-size:14.5px;color:var(--muted)}
+  .nav-links a{text-decoration:none;transition:color .18s}
+  .nav-links a:hover{color:var(--text)}
+  .by{color:var(--faint);font-size:13.5px}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:9px;border-radius:12px;
+    padding:13px 22px;font-size:15px;font-weight:550;text-decoration:none;
+    border:1px solid transparent;transition:transform .18s,box-shadow .25s,background .2s,border-color .2s;
+    white-space:nowrap}
+  .btn-primary{
+    background:linear-gradient(180deg,#7d6cff 0%,#5d49ee 100%);
+    color:#fff;border-color:rgba(255,255,255,.16);
+    box-shadow:0 0 0 1px rgba(110,91,246,.35),0 12px 34px -12px rgba(110,91,246,.85),inset 0 1px 0 rgba(255,255,255,.22);
+  }
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(110,91,246,.5),0 18px 44px -12px rgba(110,91,246,1),inset 0 1px 0 rgba(255,255,255,.28)}
+  .btn-ghost{background:rgba(255,255,255,.03);color:var(--text-2);border-color:var(--line-strong)}
+  .btn-ghost:hover{background:rgba(255,255,255,.07);color:var(--text);transform:translateY(-1px)}
+  .btn-sm{padding:9px 16px;font-size:14px;border-radius:10px}
+
+  /* ---------- section furniture ---------- */
+  section{position:relative}
+  .sec{padding:104px 0}
+  .sec-head{max-width:780px;margin-bottom:52px;position:relative}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);
+    font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-bright);
+    margin-bottom:20px}
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 12px 2px rgba(110,91,246,.9)}
+  .sec h2{font-size:clamp(30px,4vw,44px);font-weight:600;margin-bottom:18px}
+  .sec-intro{color:var(--muted);font-size:18px;max-width:66ch}
+  .glow-head{position:absolute;left:0;top:-90px;
+    width:640px;height:260px;pointer-events:none;z-index:-1;
+    background:radial-gradient(ellipse at center,rgba(110,91,246,.15),transparent 68%);filter:blur(26px)}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong) 22%,var(--line-strong) 78%,transparent)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:112px 0 120px;border-bottom:1px solid var(--line)}
+  .hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .hero-bg svg{width:100%;height:100%;display:block}
+  .hero-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(900px 460px at 50% -8%,rgba(110,91,246,.20),transparent 62%),
+      radial-gradient(620px 380px at 88% 16%,rgba(64,86,220,.12),transparent 66%),
+      linear-gradient(180deg,rgba(14,14,19,0) 40%,rgba(14,14,19,.84) 82%,var(--bg) 100%);}
+  .hero-in{position:relative;z-index:2;max-width:980px}
+  .pill{display:inline-flex;align-items:center;gap:10px;padding:7px 15px 7px 11px;border-radius:999px;
+    border:1px solid var(--line-strong);background:rgba(255,255,255,.035);
+    font-size:13.5px;color:var(--text-2);margin-bottom:34px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px 2px rgba(110,91,246,.8)}
+  h1.hero-h{font-size:clamp(30px,4.9vw,57px);font-weight:600;letter-spacing:-.035em;line-height:1.07;
+    max-width:20ch}
+  .hero-sub{margin-top:28px;font-size:clamp(17px,1.8vw,21px);line-height:1.56;color:var(--text-2);
+    font-weight:350;max-width:64ch}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:44px;align-items:center}
+  .hero-note{font-size:13.5px;color:var(--faint);margin-top:24px}
+
+  .edge{stroke:rgba(160,146,255,.30);stroke-width:1;fill:none}
+  .edge.dim{stroke:rgba(255,255,255,.07)}
+  .node{fill:#B7AAFF}
+  .node.soft{fill:rgba(255,255,255,.28)}
+  .pulse{animation:pulse 5.5s ease-in-out infinite}
+  .pulse2{animation:pulse 7.5s ease-in-out infinite;animation-delay:-2.4s}
+  .pulse3{animation:pulse 9s ease-in-out infinite;animation-delay:-4.8s}
+  @keyframes pulse{0%,100%{opacity:.22}50%{opacity:.92}}
+  .drift{animation:drift 30s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0)}to{transform:translate(-26px,14px)}}
+  .flow{stroke-dasharray:3 9;animation:flow 3.6s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-24}}
+
+  /* ---------- contrast ---------- */
+  .contrast{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .col{padding:34px 32px 36px;border-radius:var(--radius);border:1px solid var(--line);
+    background:var(--surface);position:relative;overflow:hidden;display:flex;flex-direction:column}
+  .col.them{background:linear-gradient(180deg,#131319,#101015)}
+  .col.us{background:linear-gradient(180deg,rgba(110,91,246,.10),rgba(21,21,29,1) 58%);
+    border-color:rgba(110,91,246,.32);
+    box-shadow:0 30px 70px -44px rgba(110,91,246,.75)}
+  .col-tag{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:18px}
+  .col.us .col-tag{color:var(--accent-bright)}
+  .quote{font-size:20px;line-height:1.5;color:var(--text-2);font-weight:400;letter-spacing:-.015em}
+  .col.us .quote{color:var(--text)}
+  .shortfalls{margin:26px 0 0;padding:0;list-style:none;display:grid;gap:16px}
+  .shortfalls li{position:relative;padding-left:26px;font-size:15px;color:var(--muted);line-height:1.62}
+  .shortfalls li::before{content:"";position:absolute;left:2px;top:10px;width:10px;height:1.5px;
+    background:var(--faint);border-radius:2px}
+  .col.us .shortfalls li::before{background:var(--accent);box-shadow:0 0 8px rgba(110,91,246,.9)}
+  .col.us .shortfalls li{color:var(--text-2)}
+  .col-foot{margin-top:auto;padding-top:24px;font-size:14.5px;color:var(--muted)}
+  .col-foot span{display:block;padding-top:22px;border-top:1px solid var(--line)}
+  .col-foot a{color:var(--accent-bright);text-decoration:none;border-bottom:1px solid rgba(152,135,255,.35)}
+  .col-foot a:hover{border-color:var(--accent-bright)}
+
+  /* ---------- how it works ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .step{padding:28px 24px 30px;border-radius:16px;border:1px solid var(--line);background:var(--surface);
+    display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s}
+  .step:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+  .step-n{font-family:var(--mono);font-size:11.5px;color:var(--accent-bright);letter-spacing:.14em}
+  .step h3{font-size:18px;font-weight:600;letter-spacing:-.02em}
+  .step p{font-size:14.5px;color:var(--muted);line-height:1.62}
+  .human{margin-top:26px;display:flex;gap:16px;align-items:flex-start;padding:24px 26px;border-radius:16px;
+    border:1px solid rgba(110,91,246,.28);background:rgba(110,91,246,.06)}
+  .human svg{flex:none;margin-top:4px}
+  .human p{font-size:15.5px;color:var(--text-2)}
+  .human b{color:var(--text);font-weight:600}
+  .tools{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;align-items:center}
+  .tools-label{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-right:6px}
+  .tool{font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--muted);
+    border:1px solid var(--line);border-radius:8px;padding:7px 12px;background:rgba(255,255,255,.02)}
+
+  /* ---------- timeline ---------- */
+  .tl-sec{background:linear-gradient(180deg,var(--bg),#0B0B10 40%,var(--bg));
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tl-shell{border:1px solid var(--line);border-radius:22px;background:
+    linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.008));
+    padding:38px 34px 34px;box-shadow:0 40px 100px -60px rgba(110,91,246,.6)}
+  .tl-meta{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:baseline;justify-content:space-between;
+    margin-bottom:26px}
+  .tl-title{font-size:19px;font-weight:600;letter-spacing:-.02em}
+  .tl-title span{color:var(--muted);font-weight:400;font-size:15px;margin-left:10px}
+  .tl-legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;color:var(--muted);font-family:var(--mono);letter-spacing:.02em}
+  .lg{display:inline-flex;align-items:center;gap:8px}
+  .sw{width:10px;height:10px;border-radius:3px;flex:none}
+  .c1{background:#6E5BF6;box-shadow:0 0 10px rgba(110,91,246,.8)}
+  .c2{background:#C77DFF;box-shadow:0 0 10px rgba(199,125,255,.6)}
+  .c3{background:#5BC8F6;box-shadow:0 0 10px rgba(91,200,246,.6)}
+  .c4{background:#3A3A48}
+
+  .bar{display:grid;grid-template-columns:20fr 10fr 20fr 10fr;gap:6px;height:64px;margin-bottom:10px}
+  .seg{border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.10);
+    display:flex;align-items:center;padding:0 16px;font-size:13px;font-family:var(--mono);letter-spacing:.03em;
+    color:rgba(255,255,255,.92)}
+  .seg.s1{background:linear-gradient(180deg,rgba(110,91,246,.55),rgba(110,91,246,.24));border-color:rgba(110,91,246,.6)}
+  .seg.s2{background:linear-gradient(180deg,rgba(199,125,255,.48),rgba(199,125,255,.20));border-color:rgba(199,125,255,.55)}
+  .seg.s3{background:linear-gradient(180deg,rgba(91,200,246,.45),rgba(91,200,246,.18));border-color:rgba(91,200,246,.5)}
+  .seg.s4{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 8px,rgba(255,255,255,.02) 8px 16px);
+    border-color:rgba(255,255,255,.10);color:var(--faint)}
+  .ticks{display:grid;grid-template-columns:20fr 10fr 20fr 10fr;gap:6px;font-family:var(--mono);
+    font-size:11.5px;color:var(--faint);letter-spacing:.06em;margin-bottom:34px}
+  .ticks div{padding-left:2px}
+
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .fact{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02);
+    padding:22px 20px 24px;display:flex;flex-direction:column;gap:12px;position:relative}
+  .fact::before{content:"";position:absolute;left:20px;right:20px;top:0;height:2px;border-radius:2px}
+  .fact.f1::before{background:#6E5BF6;box-shadow:0 0 14px rgba(110,91,246,.9)}
+  .fact.f2::before{background:#C77DFF;box-shadow:0 0 14px rgba(199,125,255,.7)}
+  .fact.f3::before{background:#5BC8F6;box-shadow:0 0 14px rgba(91,200,246,.7)}
+  .fact.f4::before{background:#3A3A48}
+  .fact-time{font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.08em}
+  .fact h4{font-size:16.5px;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+  .fact p{font-size:14px;color:var(--muted);line-height:1.6}
+  .aud{margin-top:auto;padding-top:14px;display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2)}
+  .aud .sw{width:8px;height:8px;border-radius:50%}
+  .fact.f4 .aud{color:var(--faint)}
+  .tl-point{margin-top:32px;padding-top:28px;border-top:1px solid var(--line);
+    font-size:17px;color:var(--text-2);line-height:1.6;max-width:82ch}
+  .tl-point b{color:var(--text);font-weight:600}
+
+  /* ---------- layers ---------- */
+  .layers{display:grid;gap:18px}
+  .layer{display:grid;grid-template-columns:170px 1fr;gap:34px;
+    border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+    padding:32px 34px 34px;transition:border-color .22s,background .22s}
+  .layer:hover{border-color:rgba(110,91,246,.34);background:var(--surface-2)}
+  .layer-id{display:flex;flex-direction:column;gap:6px}
+  .layer-num{font-family:var(--mono);font-size:34px;font-weight:600;letter-spacing:-.03em;
+    color:rgba(255,255,255,.14);line-height:1}
+  .layer:hover .layer-num{color:rgba(152,135,255,.5)}
+  .layer-name{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent-bright)}
+  .layer h3{font-size:22px;font-weight:600;letter-spacing:-.025em;margin-bottom:16px}
+  .layer p{color:var(--muted);font-size:16px;line-height:1.68;max-width:78ch}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--text-2);
+    background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:7px;padding:6px 10px}
+
+  /* ---------- grows ---------- */
+  .grows{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grow{border:1px dashed rgba(255,255,255,.13);border-radius:16px;padding:26px 24px 28px;
+    background:rgba(255,255,255,.015);display:flex;flex-direction:column;gap:12px}
+  .grow h3{font-size:17px;font-weight:600;letter-spacing:-.02em}
+  .grow p{font-size:14.5px;color:var(--muted);line-height:1.62}
+  .grow-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- cta ---------- */
+  .cta{position:relative;overflow:hidden;border-top:1px solid var(--line)}
+  .cta-glow{position:absolute;left:50%;top:0;transform:translate(-50%,-52%);width:900px;height:420px;
+    background:radial-gradient(ellipse at center,rgba(110,91,246,.24),transparent 66%);filter:blur(30px);
+    pointer-events:none}
+  .cta-in{position:relative;z-index:2;text-align:center;max-width:760px;margin:0 auto;padding:96px 0 104px}
+  .cta-in h2{font-size:clamp(30px,4.2vw,46px);margin-bottom:20px}
+  .cta-in p{color:var(--muted);font-size:18px;margin-bottom:36px}
+  .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta-note{margin-top:30px;font-size:13.5px;color:var(--faint)}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;background:#0B0B10}
+  .foot-in{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+    font-size:13.5px;color:var(--faint)}
+  .foot-links{display:flex;gap:22px}
+  .foot-links a{text-decoration:none}
+  .foot-links a:hover{color:var(--text-2)}
+
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+  .rv.in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1040px){
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .facts{grid-template-columns:repeat(2,1fr)}
+    .grows{grid-template-columns:1fr}
+    .layer{grid-template-columns:1fr;gap:18px}
+    .layer-id{flex-direction:row;align-items:baseline;gap:14px}
+  }
+  @media (max-width:820px){
+    body{font-size:16px}
+    .sec{padding:76px 0}
+    .contrast{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .hero{padding:78px 0 88px}
+    .bar,.ticks{grid-template-columns:1fr;gap:8px}
+    .bar{height:auto}
+    .seg{height:52px}
+    .ticks{display:none}
+    .tl-shell{padding:26px 20px 28px}
+    .layer{padding:26px 22px 28px}
+    .col{padding:28px 24px 30px}
+  }
+  @media (max-width:560px){
+    .steps,.facts{grid-template-columns:1fr}
+    .wrap{padding:0 20px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .rv{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="4.6" r="2.6" fill="#9887FF"/>
+        <circle cx="4.6" cy="17" r="2.6" fill="#6E5BF6"/>
+        <circle cx="19.4" cy="17" r="2.6" fill="#6E5BF6"/>
+        <path d="M12 7.2 5.6 14.6M12 7.2l6.4 7.4M7.2 17h9.6" stroke="rgba(184,172,255,.55)" stroke-width="1.3"/>
+      </svg>
+      basezero
+    </a>
+    <div class="nav-links">
+      <a href="#difference">Difference</a>
+      <a href="#how">How it works</a>
+      <a href="#example">Example</a>
+      <a href="#capabilities">Capabilities</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="#book">Book an exploration call</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 1440 820" preserveAspectRatio="xMidYMid slice">
+      <g class="drift">
+        <g stroke-linecap="round">
+          <path class="edge flow" d="M180 210 L420 140"/>
+          <path class="edge flow" d="M420 140 L640 250"/>
+          <path class="edge" d="M180 210 L300 400"/>
+          <path class="edge dim" d="M300 400 L640 250"/>
+          <path class="edge flow" d="M640 250 L900 180"/>
+          <path class="edge" d="M900 180 L1130 300"/>
+          <path class="edge dim" d="M1130 300 L1290 180"/>
+          <path class="edge" d="M900 180 L980 430"/>
+          <path class="edge dim" d="M640 250 L560 520"/>
+          <path class="edge flow" d="M560 520 L980 430"/>
+          <path class="edge dim" d="M300 400 L560 520"/>
+          <path class="edge" d="M980 430 L1240 560"/>
+          <path class="edge dim" d="M560 520 L340 690"/>
+          <path class="edge dim" d="M980 430 L820 700"/>
+          <path class="edge dim" d="M340 690 L820 700"/>
+          <path class="edge dim" d="M1240 560 L1350 720"/>
+          <path class="edge dim" d="M120 520 L300 400"/>
+        </g>
+        <g>
+          <circle class="node pulse" cx="180" cy="210" r="3.6"/>
+          <circle class="node pulse2" cx="420" cy="140" r="5"/>
+          <circle class="node pulse3" cx="640" cy="250" r="4.2"/>
+          <circle class="node pulse" cx="900" cy="180" r="5.4"/>
+          <circle class="node pulse2" cx="1130" cy="300" r="3.4"/>
+          <circle class="node soft pulse3" cx="1290" cy="180" r="3"/>
+          <circle class="node pulse2" cx="300" cy="400" r="4"/>
+          <circle class="node pulse" cx="560" cy="520" r="5.2"/>
+          <circle class="node pulse3" cx="980" cy="430" r="4.4"/>
+          <circle class="node soft pulse" cx="1240" cy="560" r="3.2"/>
+          <circle class="node soft pulse2" cx="340" cy="690" r="3"/>
+          <circle class="node soft pulse3" cx="820" cy="700" r="3.4"/>
+          <circle class="node soft pulse" cx="120" cy="520" r="2.6"/>
+          <circle class="node soft pulse2" cx="1350" cy="720" r="2.6"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-veil" aria-hidden="true"></div>
+
+  <div class="wrap hero-in">
+    <div class="pill"><span class="dot"></span> basezero — a knowledge graph by Ascending</div>
+    <h1 class="hero-h">The tool for each team member to turn inflating data into an edge instead of scattered notes.</h1>
+    <p class="hero-sub">Built to translate individual into organizational knowledge, dissolving silos without compromising what&rsquo;s sensitive, and thus turning exponential knowledge creation into an exponential advantage.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#book">Book an exploration call
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.2 12.4 8l-3.9 3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#example">See how one call gets split</a>
+    </div>
+    <p class="hero-note">The governed knowledge layer underneath the AI assistant you already use &mdash; not a replacement for it. Hosted in the EU or in your own cloud.</p>
+  </div>
+</header>
+
+<!-- ============ CONTRAST ============ -->
+<section class="sec" id="difference">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="glow-head" aria-hidden="true"></div>
+      <div class="eyebrow">The difference</div>
+      <h2>Connecting to your systems was never the hard part</h2>
+      <p class="sec-intro">Most AI-at-work pitches are sold to the risk owner. basezero is built for the person who opens it every morning &mdash; and the sensitivity controls are what make that safe to do.</p>
+    </div>
+
+    <div class="contrast">
+      <div class="col them">
+        <div class="col-tag">The usual AI-at-work pitch</div>
+        <p class="quote">&ldquo;Use AI without putting your company at risk. Keep your knowledge secure and make sure answers are accurate and reliable.&rdquo;</p>
+        <ul class="shortfalls">
+          <li>It&rsquo;s built to connect to many systems &mdash; but connecting isn&rsquo;t the hard part. Most of these tools still can&rsquo;t tell what is safe to share company-wide and what has to stay personal.</li>
+          <li>It&rsquo;s sold as a security and compliance decision. That matters, but it is a much harder sale without a clear daily use case and a clear return.</li>
+        </ul>
+        <div class="col-foot"><span>The result: a tool bought once, opened rarely.</span></div>
+      </div>
+
+      <div class="col us">
+        <div class="col-tag">basezero</div>
+        <p class="quote">A tool people open every day because it does something useful for them individually &mdash; not because IT mandated it for risk reduction.</p>
+        <ul class="shortfalls">
+          <li>It leads with function. Your own notes, calls and threads become a structure you can query, reason over and reuse &mdash; and every colleague&rsquo;s work does the same.</li>
+          <li>Security and sensitivity protection are real and load-bearing. They are what makes the daily-use promise safe, not the pitch itself.</li>
+          <li>Sharing happens at the level of the individual fact, with a person approving the move from personal to organizational.</li>
+        </ul>
+        <div class="col-foot"><span>How the sensitivity mechanism actually works: <a href="#example">one 60-minute call, split four ways &rarr;</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="glow-head" aria-hidden="true"></div>
+      <div class="eyebrow">How it works</div>
+      <h2>It lives where your team already works</h2>
+      <p class="sec-intro">No new habit to enforce. basezero connects to the tools people already use, and is reachable from inside them &mdash; with a wiki-like view of accumulated knowledge sitting behind it.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step rv">
+        <div class="step-n">01</div>
+        <h3>Connect</h3>
+        <p>Email, Slack, Claude, and call-notetaker tools like Jamie. Knowledge is picked up from the work itself, not from a folder someone remembered to fill.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-n">02</div>
+        <h3>Reach it anywhere</h3>
+        <p>Ask through Claude, ask a Slackbot, or open the basezero interface directly. Behind all three sits a wiki-like view of everything the graph has accumulated.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-n">03</div>
+        <h3>Inbox</h3>
+        <p>Inconsistencies and contradictions between sources are surfaced as items, each with a drafted fix attached. A person reviews the draft and approves it or rejects it.</p>
+      </div>
+      <div class="step rv">
+        <div class="step-n">04</div>
+        <h3>Share center</h3>
+        <p>Suggestions for what individual knowledge should move to which team, and why. Nothing moves from personal to organizational until a person approves that specific move.</p>
+      </div>
+    </div>
+
+    <div class="human">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="9" stroke="#9887FF" stroke-width="1.4"/>
+        <path d="M6 10.2 8.8 13 14 7.6" stroke="#9887FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p><b>A person approves every change.</b> This is a human-in-the-loop workflow, not an automated sync. basezero drafts, proposes and explains; the decision to publish a fix or move a fact from personal to organizational is always made by someone, on the record.</p>
+    </div>
+
+    <div class="tools">
+      <span class="tools-label">Reachable through</span>
+      <span class="tool">Claude</span>
+      <span class="tool">Slack</span>
+      <span class="tool">Email</span>
+      <span class="tool">Jamie &amp; other notetakers</span>
+      <span class="tool">basezero interface</span>
+      <span class="tool">Wiki view</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER CALL TIMELINE ============ -->
+<section class="sec tl-sec" id="example">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="glow-head" aria-hidden="true"></div>
+      <div class="eyebrow">Show, don&rsquo;t tell</div>
+      <h2>One founder call. Four different audiences.</h2>
+      <p class="sec-intro">A single 60-minute conversation almost never has a single right audience. Document-level sharing forces an all-or-nothing choice, so the call ends up either locked away or over-shared. basezero decides at the level of the fact.</p>
+    </div>
+
+    <div class="tl-shell rv">
+      <div class="tl-meta">
+        <div class="tl-title">Founder call &mdash; Tuesday, 60 minutes <span>transcript from the notetaker, resolved into facts</span></div>
+        <div class="tl-legend">
+          <span class="lg"><span class="sw c1"></span> Founder team</span>
+          <span class="lg"><span class="sw c2"></span> One team lead</span>
+          <span class="lg"><span class="sw c3"></span> Whole company</span>
+          <span class="lg"><span class="sw c4"></span> Discarded</span>
+        </div>
+      </div>
+
+      <div class="bar" role="img" aria-label="Timeline of a 60 minute call divided into four differently shared segments">
+        <div class="seg s1">0&ndash;20 min &nbsp;&middot;&nbsp; Investor situation</div>
+        <div class="seg s2">20&ndash;30 &middot; Personnel</div>
+        <div class="seg s3">30&ndash;50 min &nbsp;&middot;&nbsp; Competitive benchmarking</div>
+        <div class="seg s4">50&ndash;60 &middot; Small talk</div>
+      </div>
+      <div class="ticks">
+        <div>00:00</div><div>20:00</div><div>30:00</div><div>50:00 &rarr; 60:00</div>
+      </div>
+
+      <div class="facts">
+        <div class="fact f1">
+          <div class="fact-time">0&ndash;20 MIN</div>
+          <h4>Investor situation</h4>
+          <p>Terms, runway, who is in and who is out. Materially sensitive, and useless without the context the founders already hold.</p>
+          <div class="aud"><span class="sw c1"></span> Shared only within the founder team</div>
+        </div>
+        <div class="fact f2">
+          <div class="fact-time">20&ndash;30 MIN</div>
+          <h4>A situation involving one employee</h4>
+          <p>Specific to one person and their working situation. It has an owner who needs to act on it &mdash; and no one else does.</p>
+          <div class="aud"><span class="sw c2"></span> Shared with that person&rsquo;s team lead only</div>
+        </div>
+        <div class="fact f3">
+          <div class="fact-time">30&ndash;50 MIN</div>
+          <h4>Competitive benchmarking</h4>
+          <p>How rivals are pricing and positioning. This is exactly the kind of knowledge that usually dies in one person&rsquo;s notes.</p>
+          <div class="aud"><span class="sw c3"></span> Shared with everyone in the company</div>
+        </div>
+        <div class="fact f4">
+          <div class="fact-time">50&ndash;60 MIN</div>
+          <h4>Unrelated chat</h4>
+          <p>Weekend plans, logistics, a tangent that goes nowhere. Not knowledge, and not kept.</p>
+          <div class="aud"><span class="sw c4"></span> Discarded entirely</div>
+        </div>
+      </div>
+
+      <p class="tl-point"><b>basezero determines who should see what at the level of the individual fact or topic inside one conversation</b> &mdash; not an all-or-nothing, document-level share. Each proposed share arrives in the share center with its audience and its reason, and a person approves it before anything moves.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIVE LAYERS ============ -->
+<section class="sec" id="capabilities">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="glow-head" aria-hidden="true"></div>
+      <div class="eyebrow">Technical capabilities</div>
+      <h2>Knowledge in one system, owned by you</h2>
+      <p class="sec-intro">Most AI tools search a folder. This is a knowledge graph &mdash; it ingests your organization&rsquo;s knowledge, resolves it into a single structure, reasons across it, and keeps proving it&rsquo;s right. Five layers, working together.</p>
+    </div>
+
+    <div class="layers">
+      <article class="layer rv">
+        <div class="layer-id"><div class="layer-num">01</div><div class="layer-name">INGESTION</div></div>
+        <div>
+          <h3>One graph, kept current, automatically</h3>
+          <p>Every source &mdash; AFAS, Exact, DATEV, Personio, SharePoint, Drive, Slack, your file shares &mdash; syncs on a schedule, not a one-time import. As content lands, it&rsquo;s resolved into entities and typed relationships, so &ldquo;your biggest customer&rdquo; is one node no matter how many systems mention them. The graph tracks the entity, not the file. No manual uploads. No stale context six weeks after go-live. No migration project every time a source changes.</p>
+          <div class="chips">
+            <span class="chip">Incremental sync</span><span class="chip">Change detection</span><span class="chip">Deletion propagation</span><span class="chip">Permission refresh</span><span class="chip">Entity resolution</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="layer rv">
+        <div class="layer-id"><div class="layer-num">02</div><div class="layer-name">RETRIEVAL</div></div>
+        <div>
+          <h3>Finds the whole answer, and says so</h3>
+          <p>Most assistants fire a single query and have no way to know what they missed &mdash; there&rsquo;s nothing in their architecture to enumerate against. This layer knows the edges of its own corpus. It walks all of it, follows a question across as many hops as the answer requires, and reports what it covered, not just what it found. Ask the same question about last year and it retrieves what was true then, not only what&rsquo;s true now. Every claim traces back to the passage it came from.</p>
+          <div class="chips">
+            <span class="chip">Exhaustive scan</span><span class="chip">Multi-hop reasoning</span><span class="chip">Temporality</span><span class="chip">Provenance</span><span class="chip">Coverage reporting</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="layer rv">
+        <div class="layer-id"><div class="layer-num">03</div><div class="layer-name">TRANSPARENCY</div></div>
+        <div>
+          <h3>See the answer. See the evidence. See the source.</h3>
+          <p>Every answer arrives with its ranked sources and a direct line to the underlying documents &mdash; not a black box you have to take on faith. What the graph concludes on top of your raw data is written to a living wiki: one page per customer, product or process, every claim linked back to where it came from. Anyone can open it, search it, correct it in place. No embeddings you can&rsquo;t inspect, no query language to learn, nothing hidden.</p>
+          <div class="chips">
+            <span class="chip">Ranked source set</span><span class="chip">Direct document access</span><span class="chip">Passage-level citations</span><span class="chip">Wiki pages</span><span class="chip">Editable in place</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="layer rv">
+        <div class="layer-id"><div class="layer-num">04</div><div class="layer-name">CURATION</div></div>
+        <div>
+          <h3>Gets better because people use it</h3>
+          <p>The graph watches itself &mdash; surfacing gaps, contradictions and pages going stale, with the missing piece already drafted for a person to approve. It also learns from how your team actually communicates, reasoning across the graph instead of only retrieving what&rsquo;s already written down. Most AI tools write what they learn into a private memory only one person can read. This one gets smarter for whoever asks next.</p>
+          <div class="chips">
+            <span class="chip">Gap &amp; contradiction detection</span><span class="chip">Drafted fixes</span><span class="chip">Human approval</span><span class="chip">Write-back to your files</span><span class="chip">Org-level learning</span><span class="chip">Graph inference</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="layer rv">
+        <div class="layer-id"><div class="layer-num">05</div><div class="layer-name">CONTROL</div></div>
+        <div>
+          <h3>Every permission, all the way down</h3>
+          <p>Permissions live on the fact, not just the file &mdash; and they propagate into everything built from it. A summary inherits the combined rights of every source behind it; revoke one document and every answer derived from it loses access too. Sensitive content is tagged and rerouted before it ever reaches a model that shouldn&rsquo;t see it. Hosted in the EU or in your own cloud, fully exportable, always. Your knowledge stays yours. No lock-in.</p>
+          <div class="chips">
+            <span class="chip">Fact-level permissions</span><span class="chip">Permission propagation</span><span class="chip">Sensitivity tagging</span><span class="chip">Source-side rerouting</span><span class="chip">Retrieval logging</span><span class="chip">EU hosting or your cloud</span><span class="chip">Full export</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<!-- ============ WHERE THIS GROWS ============ -->
+<section class="sec" id="grows">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Where this grows</div>
+      <h2>Built to extend, once the core is in place</h2>
+      <p class="sec-intro">These are expansion vectors, not headline claims &mdash; the directions basezero is built to grow into with the teams we work with first.</p>
+    </div>
+
+    <div class="grows">
+      <div class="grow rv">
+        <div class="grow-tag">Deeper integrations</div>
+        <h3>European back-office systems</h3>
+        <p>Beyond the standard ingestion layer, deeper coverage of niche European systems &mdash; AFAS, Exact, DATEV, Personio, German document-management systems &mdash; for teams whose knowledge genuinely lives there.</p>
+      </div>
+      <div class="grow rv">
+        <div class="grow-tag">Individual compounding</div>
+        <h3>A second brain, over time</h3>
+        <p>Once org-wide adoption is established, what an individual accumulates in basezero compounds into a personal knowledge base that keeps its value across projects, teams and years.</p>
+      </div>
+      <div class="grow rv">
+        <div class="grow-tag">Standing commitment</div>
+        <h3>EU hosting and data residency</h3>
+        <p>GDPR alignment, EU hosting or deployment into your own cloud, and full export. A standing commitment underneath the product rather than a feature we ship once.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="book">
+  <div class="cta-glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="cta-in">
+      <h2>Come build this with us</h2>
+      <p>basezero is at the design-partnership stage. We are working with the first handful of European organizations to shape how the graph, the inbox and the share center fit real teams &mdash; not selling a finished product off a shelf.</p>
+      <div class="cta-btns">
+        <a class="btn btn-primary" href="#">Book an exploration call
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.2 12.4 8l-3.9 3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#">Talk to our team about integration</a>
+      </div>
+      <p class="cta-note">An exploration call is a conversation about your knowledge, your systems and what would have to be true for this to work &mdash; roughly 30 minutes.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>basezero &mdash; a knowledge graph by Ascending. Hosted in the EU or in your own cloud.</div>
+    <div class="foot-links">
+      <a href="#difference">Difference</a>
+      <a href="#how">How it works</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#book">Book a call</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var items = document.querySelectorAll('.rv');
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{ rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+    items.forEach(function(el, i){
+      el.style.transitionDelay = (Math.min(i % 4, 3) * 70) + 'ms';
+      io.observe(el);
+    });
+  })();
+</script>
+</body>
+</html>
