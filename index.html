@@ -109,6 +109,7 @@
 
   /* ---------- step cards ---------- */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2);margin-top:var(--s5)}
+  .steps-3{grid-template-columns:repeat(3,1fr)}
   .card{border:1px solid var(--border);border-radius:16px;background:#fff;box-shadow:var(--shadow-sm);
     padding:var(--s4);display:flex;flex-direction:column;gap:12px;
     transition:background .2s,border-color .2s,transform .2s}
@@ -178,6 +179,22 @@
   .grow h3{font-size:1.0625rem;font-weight:700}
   .grow p{font-size:.9375rem;color:var(--text-secondary);line-height:1.6}
 
+  /* ---------- security ---------- */
+  .sec-split{display:grid;grid-template-columns:minmax(300px,.95fr) 1.15fr;gap:var(--s6) var(--s7);align-items:start}
+  .sec-head-wide{max-width:none}
+  .h2-lg{font-size:clamp(2rem,3.9vw,2.75rem);line-height:1.1;margin-bottom:var(--s3)}
+  .badges{display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center;margin-top:var(--s5)}
+  .badge{width:106px;height:106px;flex:none}
+  .badge-t{font-family:var(--sans);font-size:24px;font-weight:700;fill:var(--text-primary);letter-spacing:-.01em}
+  .badge-t-lg{font-size:29px}
+  .fineprint{margin-top:var(--s3);font-size:.8125rem;font-style:italic;color:var(--text-faint);max-width:48ch}
+  .seclist{list-style:none;margin:0;padding:0;border-top:1px solid var(--border)}
+  .seclist li{display:grid;grid-template-columns:56px 1fr;gap:var(--s2);
+    padding:var(--s4) 0;border-bottom:1px solid var(--border)}
+  .seclist-n{font-family:var(--mono);font-size:.8125rem;color:var(--text-faint);padding-top:4px}
+  .seclist h3{font-size:1.125rem;font-weight:700;margin-bottom:8px}
+  .seclist p{font-size:.9375rem;color:var(--text-secondary);line-height:1.6;max-width:56ch}
+
   /* ---------- cta ---------- */
   .cta{padding:var(--s8) 0}
   .cta-card{position:relative;overflow:hidden;border:1px solid var(--border);border-radius:16px;
@@ -205,7 +222,9 @@
 
   /* ---------- responsive ---------- */
   @media (max-width:1039px){
+    .sec-split{grid-template-columns:1fr;gap:var(--s5)}
     .steps{grid-template-columns:repeat(2,1fr)}
+    .steps-3{grid-template-columns:repeat(2,1fr)}
     .grows{grid-template-columns:1fr}
     .layer{grid-template-columns:1fr;gap:var(--s3)}
     .layer-rail{flex-direction:row;align-items:baseline;gap:14px}
@@ -216,6 +235,9 @@
   }
   @media (max-width:767px){
     .sec{padding:var(--s7) 0}
+    .badge{width:84px;height:84px}
+    .badges{gap:var(--s3)}
+    .steps-3{grid-template-columns:1fr}
     .cta{padding:var(--s7) 0}
     .cta-card{padding:var(--s6) var(--s3)}
     .hero{padding:72px 0 var(--s6)}
@@ -253,6 +275,7 @@
       <a href="#how">How it works</a>
       <a href="#call">Example</a>
       <a href="#capabilities">Capabilities</a>
+      <a href="#security">Security</a>
     </div>
     <a class="btn btn-primary btn-sm" href="#book">Book an exploration call</a>
   </div>
@@ -471,8 +494,8 @@
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="wrap hero-in">
     <span class="tagline"><span class="dot"></span> basezero — a knowledge graph by Ascending</span>
-    <h1>The tool for each team member to turn inflating data into an edge instead of scattered notes.</h1>
-    <p class="hero-sub">Built to translate individual into organizational knowledge, dissolving silos without compromising what&rsquo;s sensitive, and thus turning exponential knowledge creation into an exponential advantage.</p>
+    <h1>The tool to turn inflating data into an organizational advantage.</h1>
+    <p class="hero-sub">Organizes each team member&rsquo;s knowledge work in a time where data information intake became a core bottleneck and is exponentially increasing. Creates an organizational advantage by dissolving silos without compromising what&rsquo;s sensitive, and thus turning exponential data creation into a compounding knowledge edge.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#book">Book an exploration call
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.2 12.4 8l-3.9 3.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -935,9 +958,286 @@
 <section class="sec" id="how">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">How it works</span>
-      <h2>Individual knowledge, translated into organizational knowledge</h2>
-      <p class="lead">basezero connects to the tools people already use &mdash; email, Slack, Claude, and call-notetaker tools like Jamie &mdash; and is reachable from inside them: ask through Claude, ask a Slackbot, or open the basezero interface. Behind all three sits a wiki-like view of everything the graph has accumulated.</p>
+      <div class="glow glow-l" aria-hidden="true"></div>
+      <span class="eyebrow">How it works &middot; Part one</span>
+      <h2>Organizing each team member&rsquo;s knowledge work</h2>
+      <p class="lead">basezero connects to the tools people already use &mdash; email, Slack, Claude, and call-notetaker tools like Jamie &mdash; and organizes what they produce into one knowledge base a person can open and read, rather than a folder they have to search.</p>
+    </div>
+
+    <div class="figure rv">
+      <svg viewBox="0 0 1200 520" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="kb-title kb-desc" xmlns="http://www.w3.org/2000/svg">
+  <title id="kb-title">One person's knowledge, organized, kept correct, and used correctly by AI</title>
+  <desc id="kb-desc">Three linked parts. On the left, a knowledge base panel: a slim rail of page titles — Northwind highlighted, then Pricing, Onboarding, Q3 review and Vendors — beside an open page titled Northwind, whose three claim lines each carry small source chips showing where they came from. In the centre, raised above that page on a soft shadow and pointing back at it, a violet-outlined card labelled Needs your confirmation: the two name variants Northwind and Project NW sit either side of an equals mark under the question Same project?, with the choices Merge and Keep both and a Confirm control — the system asks, the person decides, nothing changes on its own. On the right, an accent line runs out of the knowledge base and down a spine that feeds four capability rows — Full context, Entity resolution, Reasoning, and Temporality, the last with a small then-and-now pair of dots on a short axis — showing what AI tools can do once the base is organized.</desc>
+
+  <style>
+    .kb-fig { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .kb-panel { fill: #FFFFFF; stroke: #E6E6EC; stroke-width: 1; }
+    .kb-rail { fill: #F7F7F9; }
+    .kb-hair { stroke: #E6E6EC; stroke-width: 1; fill: none; }
+    .kb-dot { fill: #C9C9D4; }
+    .kb-bar { fill: #C9C9D4; }
+    .kb-chip { fill: #F7F7F9; stroke: #E6E6EC; stroke-width: 1; }
+    .kb-chip-dot { fill: #B4B4C2; }
+    .kb-eyebrow { font-size: 12px; letter-spacing: .09em; fill: #5B5B6B; }
+    .kb-page { font-size: 14px; fill: #5B5B6B; }
+    .kb-page-on { font-size: 14px; fill: #6E56CF; }
+    .kb-row-on { fill: rgba(110,86,207,.14); }
+    .kb-row-mark { fill: #6E56CF; }
+    .kb-doctitle { font-size: 19px; font-weight: 600; fill: #0E0E13; }
+
+    .kb-card { fill: #FFFFFF; stroke: #6E56CF; stroke-width: 1.5; }
+    .kb-card-glyph { fill: none; stroke: #6E56CF; stroke-width: 1.2; }
+    .kb-card-glyph-b { fill: #6E56CF; opacity: .5; }
+    .kb-cardlabel { font-size: 12px; letter-spacing: .09em; fill: #6E56CF; }
+    .kb-var { fill: #FFFFFF; stroke: #8B5CF6; stroke-width: 1.3; }
+    .kb-var-dot { fill: #8B5CF6; }
+    .kb-name { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px; fill: #0E0E13; }
+    .kb-link { stroke: #C9C9D4; stroke-width: 1; fill: none; }
+    .kb-eq-ring { fill: #FFFFFF; stroke: rgba(110,86,207,.30); stroke-width: 1.4; }
+    .kb-eq { stroke: #6E56CF; stroke-width: 1.8; stroke-linecap: round; fill: none; }
+    .kb-ask { font-size: 16px; fill: #0E0E13; }
+    .kb-choice { font-size: 14px; fill: #5B5B6B; }
+    .kb-radio { fill: #FFFFFF; stroke: #C9C9D4; stroke-width: 1.4; }
+    .kb-radio-on { fill: #FFFFFF; stroke: #6E56CF; stroke-width: 1.6; }
+    .kb-radio-fill { fill: #6E56CF; }
+    .kb-btn { fill: #6E56CF; }
+    .kb-btn-label { font-size: 14px; font-weight: 600; fill: #FFFFFF; }
+
+    .kb-feed { stroke: #6E56CF; stroke-width: 2; fill: none; opacity: .55; stroke-linecap: round; }
+    .kb-feed-dash { stroke: #6E56CF; stroke-width: 2; fill: none; stroke-linecap: round; stroke-dasharray: 14 480; animation: kb-travel 9s linear infinite; }
+    .kb-spine { stroke: rgba(110,86,207,.30); stroke-width: 2; fill: none; stroke-linecap: round; }
+    .kb-tick { stroke: #6E56CF; stroke-width: 1.6; fill: none; }
+    .kb-origin { fill: #6E56CF; }
+    .kb-cap { font-size: 16px; fill: #0E0E13; }
+    .kb-tile { fill: #F7F7F9; stroke: #E6E6EC; stroke-width: 1; }
+    .kb-ic { fill: none; stroke: #B4B4C2; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+    .kb-ic-solid { fill: #5B5B6B; }
+    .kb-ic-hand { fill: none; stroke: #5B5B6B; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .kb-axis { stroke: #C9C9D4; stroke-width: 1; fill: none; }
+    .kb-then { fill: #B4B4C2; }
+    .kb-now { fill: #0EA5E9; opacity: .75; }
+    .kb-tiny { font-size: 12px; fill: #5B5B6B; }
+
+    @keyframes kb-travel { from { stroke-dashoffset: 494; } to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion:reduce) { * { animation: none !important; } }
+  </style>
+
+  <defs>
+    <clipPath id="kb-panelclip">
+      <rect x="40" y="64" width="390" height="412" rx="14"/>
+    </clipPath>
+    <marker id="kb-arw" viewBox="0 0 11 9" refX="9" refY="4.5" markerWidth="11" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1 1 L10 4.5 L1 8 Z" fill="#6E56CF"/>
+    </marker>
+    <filter id="kb-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feOffset in="SourceAlpha" dx="0" dy="12" result="kb-off"/>
+      <feGaussianBlur in="kb-off" stdDeviation="13" result="kb-blur"/>
+      <feFlood flood-color="#5A5A6E" flood-opacity="0.26" result="kb-col"/>
+      <feComposite in="kb-col" in2="kb-blur" operator="in" result="kb-sh"/>
+      <feMerge>
+        <feMergeNode in="kb-sh"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g class="kb-fig">
+
+    <!-- eyebrows -->
+    <text class="kb-eyebrow" x="40" y="44">ONE PLACE TO LOOK</text>
+    <text class="kb-eyebrow" x="904" y="44">AI TOOLS</text>
+
+    <!-- 1. knowledge base panel -->
+    <g>
+      <rect class="kb-panel" x="40" y="64" width="390" height="412" rx="14"/>
+      <g clip-path="url(#kb-panelclip)">
+        <rect class="kb-rail" x="40" y="64" width="112" height="412"/>
+      </g>
+      <path class="kb-hair" d="M41 104 H429"/>
+      <path class="kb-hair" d="M152 65 V475"/>
+      <circle class="kb-dot" cx="58" cy="84" r="3.5"/>
+      <circle class="kb-dot" cx="72" cy="84" r="3.5"/>
+      <circle class="kb-dot" cx="86" cy="84" r="3.5"/>
+
+      <!-- rail: page titles -->
+      <rect class="kb-row-on" x="48" y="126" width="98" height="32" rx="9"/>
+      <rect class="kb-row-mark" x="48" y="132" width="3" height="20" rx="1.5"/>
+      <text class="kb-page-on" x="62" y="147">Northwind</text>
+      <text class="kb-page" x="62" y="193">Pricing</text>
+      <text class="kb-page" x="62" y="239">Onboarding</text>
+      <text class="kb-page" x="62" y="285">Q3 review</text>
+      <text class="kb-page" x="62" y="331">Vendors</text>
+
+      <!-- page preview -->
+      <text class="kb-doctitle" x="176" y="156">Northwind</text>
+      <path class="kb-hair" d="M176 172 H352"/>
+
+      <!-- claim 1 -->
+      <rect class="kb-bar" x="176" y="192" width="176" height="8" rx="4"/>
+      <rect class="kb-bar" x="176" y="209" width="120" height="8" rx="4"/>
+      <g>
+        <rect class="kb-chip" x="176" y="228" width="54" height="17" rx="8.5"/>
+        <circle class="kb-chip-dot" cx="189" cy="236.5" r="3"/>
+        <rect class="kb-bar" x="198" y="234.5" width="24" height="4" rx="2"/>
+        <rect class="kb-chip" x="240" y="228" width="64" height="17" rx="8.5"/>
+        <circle class="kb-chip-dot" cx="253" cy="236.5" r="3"/>
+        <rect class="kb-bar" x="262" y="234.5" width="34" height="4" rx="2"/>
+      </g>
+
+      <!-- claim 2 -->
+      <rect class="kb-bar" x="176" y="292" width="160" height="8" rx="4"/>
+      <rect class="kb-bar" x="176" y="309" width="104" height="8" rx="4"/>
+      <g>
+        <rect class="kb-chip" x="176" y="328" width="64" height="17" rx="8.5"/>
+        <circle class="kb-chip-dot" cx="189" cy="336.5" r="3"/>
+        <rect class="kb-bar" x="198" y="334.5" width="34" height="4" rx="2"/>
+        <rect class="kb-chip" x="250" y="328" width="54" height="17" rx="8.5"/>
+        <circle class="kb-chip-dot" cx="263" cy="336.5" r="3"/>
+        <rect class="kb-bar" x="272" y="334.5" width="24" height="4" rx="2"/>
+      </g>
+
+      <!-- claim 3 -->
+      <rect class="kb-bar" x="176" y="392" width="176" height="8" rx="4"/>
+      <rect class="kb-bar" x="176" y="409" width="88" height="8" rx="4"/>
+      <g>
+        <rect class="kb-chip" x="176" y="428" width="58" height="17" rx="8.5"/>
+        <circle class="kb-chip-dot" cx="189" cy="436.5" r="3"/>
+        <rect class="kb-bar" x="198" y="434.5" width="28" height="4" rx="2"/>
+      </g>
+    </g>
+
+    <!-- 3. feed into the AI capability column -->
+    <g>
+      <path class="kb-feed" d="M432 88 C 566 62 702 58 802 65 C 856 69 882 72 884 84"/>
+      <path class="kb-feed-dash" d="M432 88 C 566 62 702 58 802 65 C 856 69 882 72 884 84"/>
+      <circle class="kb-origin" cx="432" cy="88" r="3.5"/>
+      <path class="kb-spine" d="M884 84 V436"/>
+      <path class="kb-tick" d="M884 100 H898" marker-end="url(#kb-arw)"/>
+      <path class="kb-tick" d="M884 212 H898" marker-end="url(#kb-arw)"/>
+      <path class="kb-tick" d="M884 324 H898" marker-end="url(#kb-arw)"/>
+      <path class="kb-tick" d="M884 436 H898" marker-end="url(#kb-arw)"/>
+
+      <!-- Full context -->
+      <rect class="kb-panel" x="904" y="64" width="256" height="72" rx="14"/>
+      <rect class="kb-tile" x="920" y="80" width="40" height="40" rx="11"/>
+      <rect class="kb-ic" x="930" y="89" width="20" height="23" rx="3"/>
+      <rect class="kb-ic-solid" x="935" y="94" width="11" height="2.2" rx="1.1"/>
+      <rect class="kb-ic-solid" x="935" y="100" width="11" height="2.2" rx="1.1"/>
+      <rect class="kb-ic-solid" x="935" y="106" width="7" height="2.2" rx="1.1"/>
+      <text class="kb-cap" x="976" y="106">Full context</text>
+
+      <!-- Entity resolution -->
+      <rect class="kb-panel" x="904" y="176" width="256" height="72" rx="14"/>
+      <rect class="kb-tile" x="920" y="192" width="40" height="40" rx="11"/>
+      <circle class="kb-ic" cx="935" cy="212" r="7.5"/>
+      <circle class="kb-ic" cx="945" cy="212" r="7.5"/>
+      <circle class="kb-ic-solid" cx="940" cy="212" r="2.8"/>
+      <text class="kb-cap" x="976" y="218">Entity resolution</text>
+
+      <!-- Reasoning -->
+      <rect class="kb-panel" x="904" y="288" width="256" height="72" rx="14"/>
+      <rect class="kb-tile" x="920" y="304" width="40" height="40" rx="11"/>
+      <path class="kb-ic" d="M931 332 L940 316 L950 327 M931 332 L950 327"/>
+      <circle class="kb-ic-solid" cx="931" cy="332" r="2.8"/>
+      <circle class="kb-ic-solid" cx="940" cy="316" r="2.8"/>
+      <circle class="kb-ic-solid" cx="950" cy="327" r="2.8"/>
+      <text class="kb-cap" x="976" y="330">Reasoning</text>
+
+      <!-- Temporality -->
+      <rect class="kb-panel" x="904" y="400" width="256" height="72" rx="14"/>
+      <rect class="kb-tile" x="920" y="416" width="40" height="40" rx="11"/>
+      <circle class="kb-ic" cx="940" cy="436" r="9"/>
+      <path class="kb-ic-hand" d="M940 430 V436 L945 439"/>
+      <text class="kb-cap" x="976" y="424">Temporality</text>
+      <path class="kb-axis" d="M976 442 H1090"/>
+      <circle class="kb-then" cx="990" cy="442" r="3.5"/>
+      <text class="kb-tiny" x="990" y="462" text-anchor="middle">then</text>
+      <circle class="kb-now" cx="1064" cy="442" r="3.5"/>
+      <text class="kb-tiny" x="1064" y="462" text-anchor="middle">now</text>
+    </g>
+
+    <!-- 2. confirmation card, raised above the page -->
+    <g filter="url(#kb-shadow)">
+      <path class="kb-card" d="M402 142 H766 A16 16 0 0 1 782 158 V374 A16 16 0 0 1 766 390 H402 A16 16 0 0 1 386 374 V348 L362 330 L386 312 V158 A16 16 0 0 1 402 142 Z"/>
+
+      <rect class="kb-card-glyph" x="410" y="162" width="16" height="19" rx="3"/>
+      <rect class="kb-card-glyph-b" x="413" y="166" width="10" height="2.2" rx="1.1"/>
+      <rect class="kb-card-glyph-b" x="413" y="172" width="7" height="2.2" rx="1.1"/>
+      <text class="kb-cardlabel" x="436" y="176">NEEDS YOUR CONFIRMATION</text>
+      <path class="kb-hair" d="M410 196 H758"/>
+
+      <rect class="kb-var" x="410" y="216" width="136" height="46" rx="11"/>
+      <circle class="kb-var-dot" cx="428" cy="239" r="3.5"/>
+      <text class="kb-name" x="442" y="244">Northwind</text>
+
+      <path class="kb-link" d="M546 239 H564"/>
+      <path class="kb-link" d="M604 239 H622"/>
+      <circle class="kb-eq-ring" cx="584" cy="239" r="18"/>
+      <path class="kb-eq" d="M577 234 H591 M577 244 H591"/>
+
+      <rect class="kb-var" x="622" y="216" width="136" height="46" rx="11"/>
+      <circle class="kb-var-dot" cx="640" cy="239" r="3.5"/>
+      <text class="kb-name" x="654" y="244">Project NW</text>
+
+      <text class="kb-ask" x="410" y="300">Same project?</text>
+
+      <circle class="kb-radio-on" cx="418" cy="340" r="8.5"/>
+      <circle class="kb-radio-fill" cx="418" cy="340" r="4.2"/>
+      <text class="kb-choice" x="436" y="345">Merge</text>
+      <circle class="kb-radio" cx="512" cy="340" r="8.5"/>
+      <text class="kb-choice" x="530" y="345">Keep both</text>
+
+      <rect class="kb-btn" x="644" y="320" width="114" height="42" rx="11"/>
+      <text class="kb-btn-label" x="701" y="346" text-anchor="middle">Confirm</text>
+    </g>
+
+  </g>
+</svg>
+      <p class="fig-note"><strong>The knowledge base leads its own maintenance.</strong> When two names turn out to refer to the same project, it surfaces the conflict, drafts the correction and asks the person to confirm which one is right.</p>
+    </div>
+
+    <div class="steps">
+      <div class="card rv">
+        <span class="card-n">01</span>
+        <h3>Connect</h3>
+        <p>Email, Slack, Claude and call notetakers like Jamie. Knowledge is picked up from the work itself, so nobody has to sit down and document it.</p>
+      </div>
+      <div class="card rv">
+        <span class="card-n">02</span>
+        <h3>Viewable in one place</h3>
+        <p>Everything a person produces resolves into one wiki-like knowledge base: a page per customer, project or process, every claim linked to where it came from.</p>
+      </div>
+      <div class="card rv">
+        <span class="card-n">03</span>
+        <h3>Maintained and corrected</h3>
+        <p>Contradictions, duplicates and naming conflicts &mdash; two project names for one project &mdash; are surfaced with a drafted fix. The person confirms which version is right.</p>
+      </div>
+      <div class="card rv">
+        <span class="card-n">04</span>
+        <h3>Used correctly by AI</h3>
+        <p>Full context instead of one lucky query, entities resolved to a single node, reasoning across the graph, and temporality &mdash; what was true then, not only what is true now.</p>
+      </div>
+    </div>
+
+    <div class="reach">
+      <span class="reach-label">Reachable through</span>
+      <span class="tag">Claude</span>
+      <span class="tag">Slack</span>
+      <span class="tag">Email</span>
+      <span class="tag">Jamie &amp; other notetakers</span>
+      <span class="tag">basezero interface</span>
+      <span class="tag">Wiki view</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS, PART TWO ================= -->
+<section class="sec sec-band" id="advantage">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works &middot; Part two</span>
+      <h2>Dissolving silos into a compounding knowledge edge</h2>
+      <p class="lead">What one person learns does not have to stay with that person. Individual knowledge is translated into organizational knowledge without compromising what is sensitive &mdash; so every colleague&rsquo;s work adds to the same structure instead of ending in a private note.</p>
     </div>
 
     <div class="figure rv">
@@ -1192,29 +1492,24 @@
     <text class="hw-wiki-t" x="1103" y="318" text-anchor="middle">wiki</text>
   </g>
 </svg>
-      <p class="fig-note"><strong>Nothing crosses from personal to organizational without a person approving it.</strong> The gate in the middle is where the inbox and the share center put their proposals in front of someone, and where anything sensitive is held back.</p>
+      <p class="fig-note"><strong>Nothing crosses from personal to organizational without a person approving it.</strong> The inbox and the share center put their proposals in front of someone &mdash; with the audience and the reason attached &mdash; and anything sensitive is held back at the same gate.</p>
     </div>
 
-    <div class="steps">
+    <div class="steps steps-3">
       <div class="card rv">
         <span class="card-n">01</span>
-        <h3>Connect</h3>
-        <p>Email, Slack, Claude and call notetakers like Jamie. Knowledge is picked up from the work itself, so nobody has to sit down and document it.</p>
+        <h3>Share center</h3>
+        <p>Suggestions for what individual knowledge should move to which team, and why. Nothing moves from personal to organizational until a person approves that specific move.</p>
       </div>
       <div class="card rv">
         <span class="card-n">02</span>
-        <h3>Reach it anywhere</h3>
-        <p>Ask through Claude, ask a Slackbot, or open the basezero interface. All three are backed by a wiki-like view of the accumulated knowledge.</p>
+        <h3>Sensitivity, kept</h3>
+        <p>Permissions live on the fact rather than the file, so one conversation can be shared in part. What has to stay closed is held back at the same gate.</p>
       </div>
       <div class="card rv">
         <span class="card-n">03</span>
-        <h3>Inbox</h3>
-        <p>Inconsistencies and contradictions between sources arrive as items, each with a drafted fix attached. A person reviews the draft and approves or rejects it.</p>
-      </div>
-      <div class="card rv">
-        <span class="card-n">04</span>
-        <h3>Share center</h3>
-        <p>Suggestions for what individual knowledge should move to which team, and why. Nothing moves from personal to organizational until a person approves that specific move.</p>
+        <h3>Compounding edge</h3>
+        <p>Each approved fact makes the next question cheaper to answer, for whoever asks it &mdash; and keeps its value across projects, teams and years.</p>
       </div>
     </div>
 
@@ -1224,16 +1519,6 @@
         <path d="M6 10.2 8.8 13 14 7.6" stroke="#6E56CF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <p><strong>A person approves every change that crosses from individual to organizational.</strong> This is a human-in-the-loop workflow, not an automated sync. basezero drafts, proposes and explains; someone decides, on the record.</p>
-    </div>
-
-    <div class="reach">
-      <span class="reach-label">Reachable through</span>
-      <span class="tag">Claude</span>
-      <span class="tag">Slack</span>
-      <span class="tag">Email</span>
-      <span class="tag">Jamie &amp; other notetakers</span>
-      <span class="tag">basezero interface</span>
-      <span class="tag">Wiki view</span>
     </div>
   </div>
 </section>
@@ -1510,31 +1795,89 @@
   </div>
 </section>
 
-<!-- ================= WHERE THIS GROWS ================= -->
-<section class="sec sec-band sec-tight" id="grows">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Where this grows</span>
-      <h2>Where basezero is built to grow</h2>
-      <p class="lead">Directions the product is built to extend into, once the core is in place with the teams we work with first.</p>
+<!-- ================= SECURITY ================= -->
+<section class="sec sec-band" id="security">
+  <div class="wrap sec-split">
+    <div class="sec-head sec-head-wide">
+      <span class="eyebrow">Security &amp; sovereignty</span>
+      <h2 class="h2-lg">Secure by design,<br />sovereign by default.</h2>
+      <p class="lead">Your knowledge stays yours. EU infrastructure, EU-hosted models, permissions at fact level, and an audit trail you can read.</p>
+      <div class="badges">
+      <svg class="badge" viewBox="0 0 150 150" role="img" aria-label="GDPR aligned" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="75.00,13.60 76.73,18.61 82.04,18.71 77.81,21.91 79.35,26.99 75.00,23.95 70.65,26.99 72.19,21.91 67.96,18.71 73.27,18.61" fill="#5B5B6B"/>
+        <polygon points="102.00,20.83 103.73,25.85 109.04,25.95 104.81,29.15 106.35,34.22 102.00,31.18 97.65,34.22 99.19,29.15 94.96,25.95 100.27,25.85" fill="#5B5B6B"/>
+        <polygon points="121.77,40.60 123.50,45.61 128.80,45.71 124.57,48.91 126.11,53.99 121.77,50.95 117.42,53.99 118.96,48.91 114.73,45.71 120.03,45.61" fill="#5B5B6B"/>
+        <polygon points="129.00,67.60 130.73,72.61 136.04,72.71 131.81,75.91 133.35,80.99 129.00,77.95 124.65,80.99 126.19,75.91 121.96,72.71 127.27,72.61" fill="#5B5B6B"/>
+        <polygon points="121.77,94.60 123.50,99.61 128.80,99.71 124.57,102.91 126.11,107.99 121.77,104.95 117.42,107.99 118.96,102.91 114.73,99.71 120.03,99.61" fill="#5B5B6B"/>
+        <polygon points="102.00,114.37 103.73,119.38 109.04,119.48 104.81,122.68 106.35,127.75 102.00,124.72 97.65,127.75 99.19,122.68 94.96,119.48 100.27,119.38" fill="#5B5B6B"/>
+        <polygon points="75.00,121.60 76.73,126.61 82.04,126.71 77.81,129.91 79.35,134.99 75.00,131.95 70.65,134.99 72.19,129.91 67.96,126.71 73.27,126.61" fill="#5B5B6B"/>
+        <polygon points="48.00,114.37 49.73,119.38 55.04,119.48 50.81,122.68 52.35,127.75 48.00,124.72 43.65,127.75 45.19,122.68 40.96,119.48 46.27,119.38" fill="#5B5B6B"/>
+        <polygon points="28.23,94.60 29.97,99.61 35.27,99.71 31.04,102.91 32.58,107.99 28.23,104.95 23.89,107.99 25.43,102.91 21.20,99.71 26.50,99.61" fill="#5B5B6B"/>
+        <polygon points="21.00,67.60 22.73,72.61 28.04,72.71 23.81,75.91 25.35,80.99 21.00,77.95 16.65,80.99 18.19,75.91 13.96,72.71 19.27,72.61" fill="#5B5B6B"/>
+        <polygon points="28.23,40.60 29.97,45.61 35.27,45.71 31.04,48.91 32.58,53.99 28.23,50.95 23.89,53.99 25.43,48.91 21.20,45.71 26.50,45.61" fill="#5B5B6B"/>
+        <polygon points="48.00,20.83 49.73,25.85 55.04,25.95 50.81,29.15 52.35,34.22 48.00,31.18 43.65,34.22 45.19,29.15 40.96,25.95 46.27,25.85" fill="#5B5B6B"/>
+        <text x="75" y="84" text-anchor="middle" class="badge-t">GDPR</text>
+      </svg>
+      <svg class="badge" viewBox="0 0 150 150" role="img" aria-label="EU AI Act" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="75.00,13.60 76.73,18.61 82.04,18.71 77.81,21.91 79.35,26.99 75.00,23.95 70.65,26.99 72.19,21.91 67.96,18.71 73.27,18.61" fill="#5B5B6B"/>
+        <polygon points="102.00,20.83 103.73,25.85 109.04,25.95 104.81,29.15 106.35,34.22 102.00,31.18 97.65,34.22 99.19,29.15 94.96,25.95 100.27,25.85" fill="#5B5B6B"/>
+        <polygon points="121.77,40.60 123.50,45.61 128.80,45.71 124.57,48.91 126.11,53.99 121.77,50.95 117.42,53.99 118.96,48.91 114.73,45.71 120.03,45.61" fill="#5B5B6B"/>
+        <polygon points="129.00,67.60 130.73,72.61 136.04,72.71 131.81,75.91 133.35,80.99 129.00,77.95 124.65,80.99 126.19,75.91 121.96,72.71 127.27,72.61" fill="#5B5B6B"/>
+        <polygon points="121.77,94.60 123.50,99.61 128.80,99.71 124.57,102.91 126.11,107.99 121.77,104.95 117.42,107.99 118.96,102.91 114.73,99.71 120.03,99.61" fill="#5B5B6B"/>
+        <polygon points="102.00,114.37 103.73,119.38 109.04,119.48 104.81,122.68 106.35,127.75 102.00,124.72 97.65,127.75 99.19,122.68 94.96,119.48 100.27,119.38" fill="#5B5B6B"/>
+        <polygon points="75.00,121.60 76.73,126.61 82.04,126.71 77.81,129.91 79.35,134.99 75.00,131.95 70.65,134.99 72.19,129.91 67.96,126.71 73.27,126.61" fill="#5B5B6B"/>
+        <polygon points="48.00,114.37 49.73,119.38 55.04,119.48 50.81,122.68 52.35,127.75 48.00,124.72 43.65,127.75 45.19,122.68 40.96,119.48 46.27,119.38" fill="#5B5B6B"/>
+        <polygon points="28.23,94.60 29.97,99.61 35.27,99.71 31.04,102.91 32.58,107.99 28.23,104.95 23.89,107.99 25.43,102.91 21.20,99.71 26.50,99.61" fill="#5B5B6B"/>
+        <polygon points="21.00,67.60 22.73,72.61 28.04,72.71 23.81,75.91 25.35,80.99 21.00,77.95 16.65,80.99 18.19,75.91 13.96,72.71 19.27,72.61" fill="#5B5B6B"/>
+        <polygon points="28.23,40.60 29.97,45.61 35.27,45.71 31.04,48.91 32.58,53.99 28.23,50.95 23.89,53.99 25.43,48.91 21.20,45.71 26.50,45.61" fill="#5B5B6B"/>
+        <polygon points="48.00,20.83 49.73,25.85 55.04,25.95 50.81,29.15 52.35,34.22 48.00,31.18 43.65,34.22 45.19,29.15 40.96,25.95 46.27,25.85" fill="#5B5B6B"/>
+        <text x="75" y="71" text-anchor="middle" class="badge-t">EU AI</text>
+        <text x="75" y="99" text-anchor="middle" class="badge-t">ACT</text>
+      </svg>
+      <svg class="badge" viewBox="0 0 150 150" role="img" aria-label="ISO 27001" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#5B5B6B" stroke-width="2.6">
+          <circle cx="75" cy="58" r="46"/>
+          <ellipse cx="75" cy="58" rx="19" ry="46"/>
+          <path d="M29 58h92M36.5 35h77M36.5 81h77"/>
+        </g>
+        <rect x="26" y="44" width="98" height="29" fill="#F7F7F9"/>
+        <text x="75" y="68" text-anchor="middle" class="badge-t badge-t-lg">ISO</text>
+        <text x="75" y="137" text-anchor="middle" class="badge-t badge-t-lg">27001</text>
+      </svg>
+      </div>
+      <p class="fineprint">ISO 27001 certification in progress; our security management system follows the standard today.</p>
     </div>
-    <div class="grows">
-      <div class="grow rv">
-        <span class="grow-tag">Deeper integrations</span>
-        <h3>European back-office systems</h3>
-        <p>Deeper coverage of niche European systems &mdash; AFAS, Exact, DATEV, Personio, German document-management systems &mdash; for teams whose knowledge lives there.</p>
-      </div>
-      <div class="grow rv">
-        <span class="grow-tag">Individual compounding</span>
-        <h3>A second brain, over time</h3>
-        <p>Once org-wide adoption is established, what an individual accumulates in basezero compounds into a personal knowledge base that holds its value across projects and years.</p>
-      </div>
-      <div class="grow rv">
-        <span class="grow-tag">Standing commitment</span>
-        <h3>EU hosting and data residency</h3>
-        <p>GDPR alignment, EU hosting or deployment into your own cloud, and full export &mdash; a standing commitment underneath the product rather than a feature shipped once.</p>
-      </div>
-    </div>
+
+    <ol class="seclist">
+      <li class="rv">
+        <span class="seclist-n">01</span>
+        <div>
+          <h3>Hosted in the EU</h3>
+          <p>Your knowledge base runs on European infrastructure, and EU-hosted models process your content inside the EU.</p>
+        </div>
+      </li>
+      <li class="rv">
+        <span class="seclist-n">02</span>
+        <div>
+          <h3>Flexible deployment</h3>
+          <p>Our EU cloud, your own cloud account in your region, or &mdash; on request &mdash; your own data centre, on hardware you control.</p>
+        </div>
+      </li>
+      <li class="rv">
+        <span class="seclist-n">03</span>
+        <div>
+          <h3>Inference options</h3>
+          <p>EU-hosted models, open-weight models running beside the index, or your own keys on your existing model agreements.</p>
+        </div>
+      </li>
+      <li class="rv">
+        <span class="seclist-n">04</span>
+        <div>
+          <h3>No data training</h3>
+          <p>Your data is never used to train models. Guaranteed in writing, in every contract.</p>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
@@ -1565,6 +1908,7 @@
       <a href="#how">How it works</a>
       <a href="#call">Example</a>
       <a href="#capabilities">Capabilities</a>
+      <a href="#security">Security</a>
       <a href="#book">Book a call</a>
     </div>
   </div>
@@ -1587,7 +1931,7 @@
       io.observe(el);
     });
 
-    var ids = ['how','call','capabilities'];
+    var ids = ['how','call','capabilities','security'];
     var links = {};
     ids.forEach(function(id){
       var a = document.querySelector('.nav-links a[href="#' + id + '"]');
