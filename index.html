@@ -179,6 +179,20 @@
   .grow h3{font-size:1.0625rem;font-weight:700}
   .grow p{font-size:.9375rem;color:var(--text-secondary);line-height:1.6}
 
+  /* ---------- impact ---------- */
+  .impact{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2);margin-top:var(--s6)}
+  .impact-card{border:1px solid var(--border);border-radius:16px;background:var(--bg);
+    box-shadow:var(--shadow-sm);padding:var(--s4);display:flex;flex-direction:column;gap:10px}
+  .impact-label{font-size:.75rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--text-faint)}
+  .impact-card h3{font-size:1.125rem;font-weight:700;line-height:1.3;margin-bottom:var(--s1)}
+  .impact-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  .impact-list li{position:relative;padding-left:26px;font-size:.9375rem;line-height:1.6;
+    color:var(--text-secondary)}
+  .impact-list li::before{content:"";position:absolute;left:0;top:9px;width:12px;height:2px;
+    border-radius:2px;background:var(--accent)}
+  .impact-foot{margin-top:var(--s4);font-size:.875rem;color:var(--text-faint);max-width:76ch}
+
   /* ---------- security ---------- */
   .sec-split{display:grid;grid-template-columns:minmax(300px,.95fr) 1.15fr;gap:var(--s6) var(--s7);align-items:start}
   .sec-head-wide{max-width:none}
@@ -223,6 +237,7 @@
   /* ---------- responsive ---------- */
   @media (max-width:1039px){
     .sec-split{grid-template-columns:1fr;gap:var(--s5)}
+    .impact{grid-template-columns:1fr}
     .steps{grid-template-columns:repeat(2,1fr)}
     .steps-3{grid-template-columns:repeat(2,1fr)}
     .grows{grid-template-columns:1fr}
@@ -274,6 +289,7 @@
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#call">Example</a>
+      <a href="#impact">Impact</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#security">Security</a>
     </div>
@@ -1220,13 +1236,20 @@
     </div>
 
     <div class="reach">
-      <span class="reach-label">Reachable through</span>
-      <span class="tag">Claude</span>
+      <span class="reach-label">Integrated with</span>
+      <span class="tag">Outlook</span>
+      <span class="tag">SharePoint</span>
+      <span class="tag">MS Teams</span>
+      <span class="tag">Drive</span>
+      <span class="tag">Gmail</span>
       <span class="tag">Slack</span>
-      <span class="tag">Email</span>
-      <span class="tag">Jamie &amp; other notetakers</span>
-      <span class="tag">basezero interface</span>
-      <span class="tag">Wiki view</span>
+      <span class="tag">Copilot</span>
+      <span class="tag">Claude</span>
+      <span class="tag">ChatGPT</span>
+      <span class="tag">Langdock</span>
+      <span class="tag">Granola</span>
+      <span class="tag">Fathom</span>
+      <span class="tag">Jamie</span>
     </div>
   </div>
 </section>
@@ -1732,6 +1755,52 @@
   </div>
 </section>
 
+<!-- ================= IMPACT ================= -->
+<section class="sec sec-band" id="impact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Impact</span>
+      <h2>Where the return shows up</h2>
+      <p class="lead">The same knowledge base pays back in three places: what one person gets out of their day, what the organization stops losing between people, and what security stops costing you.</p>
+    </div>
+
+    <div class="impact">
+      <div class="impact-card rv">
+        <span class="card-n">01</span>
+        <span class="impact-label">Individual productivity</span>
+        <h3>Better outcomes from the AI work you already do</h3>
+        <ul class="impact-list">
+        <li>Answers built on your full context and resolved entities, with the source attached &mdash; instead of one lucky query into a folder.</li>
+        <li>Time back every day that went into hunting for something someone already knew.</li>
+        <li>The intake itself gets processed: what changed, what needs confirming, what is worth passing on.</li>
+        </ul>
+      </div>
+      <div class="impact-card rv">
+        <span class="card-n">02</span>
+        <span class="impact-label">Organizational productivity</span>
+        <h3>Less manual sharing, faster projects</h3>
+        <ul class="impact-list">
+        <li>Far less time spent manually forwarding, re-explaining and writing up what a colleague already has.</li>
+        <li>Knowledge reaches the person who needs it at the moment they need it, rather than after the decision is made.</li>
+        <li>Two people stop quietly solving the same problem in parallel.</li>
+        </ul>
+      </div>
+      <div class="impact-card rv">
+        <span class="card-n">03</span>
+        <span class="impact-label">Security</span>
+        <h3>AI across the whole organization, without the trade-off</h3>
+        <ul class="impact-list">
+        <li>Everyone works with AI on real company knowledge, not on a sanitised subset.</li>
+        <li>Permissions at fact level and a readable audit trail, so opening access does not mean losing control.</li>
+        <li>No compromise on sovereignty: EU hosting or your own cloud, fully exportable.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="impact-foot">These are the outcomes basezero is built to produce. We measure them with each design partner against their own baseline &mdash; that is part of what an exploration call is for.</p>
+  </div>
+</section>
+
 <!-- ================= CAPABILITIES ================= -->
 <section class="sec" id="capabilities">
   <div class="wrap">
@@ -1919,6 +1988,7 @@
     <div class="foot-links">
       <a href="#how">How it works</a>
       <a href="#call">Example</a>
+      <a href="#impact">Impact</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#security">Security</a>
       <a href="#book">Book a call</a>
@@ -1943,7 +2013,7 @@
       io.observe(el);
     });
 
-    var ids = ['how','call','capabilities','security'];
+    var ids = ['how','call','impact','capabilities','security'];
     var links = {};
     ids.forEach(function(id){
       var a = document.querySelector('.nav-links a[href="#' + id + '"]');
