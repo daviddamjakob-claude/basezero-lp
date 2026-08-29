@@ -19,11 +19,11 @@ Exactly two claims. If a section doesn't visibly advance one of them, it doesn't
 
 1. **Hero** — positioning copy over an animated knowledge-graph field
 2. **The problem: knowledge is exploding** — visual-forward, about the reality of knowledge work only
-3. **How it works · Part one** — organizing one person's knowledge: connect, viewable in one place, maintained and corrected (naming conflicts surfaced for confirmation), used correctly by AI (full context, entity resolution, reasoning, temporality)
-4. **How it works · Part two** — dissolving silos into a compounding edge: the individual → approval gate → organizational pipeline, share center, fact-level sensitivity
+3. **How it works · Part one** — organizing one person's knowledge: in one place, viewable rather than a black box, maintained and corrected (naming conflicts surfaced for confirmation), optimized for relevant and reliable AI output
+4. **How it works · Part two** — dissolving silos into a compounding edge: the individual → approval gate → organizational pipeline, share and revoke in one platform, sensitivity always kept, agent-to-agent-to-human workflows, the knowledge feed
 5. **Fact-level sharing** — one 60-minute founder call annotated into four audiences (the page's centerpiece)
 6. **Technical capabilities** — the five layers: ingestion, retrieval, transparency, curation, control
-7. **Security & sovereignty** — EU hosting, flexible deployment, inference options, no data training, with GDPR / EU AI Act / ISO 27001 marks
+7. **Security & sovereignty** — one knowledge base owned by you, sharing without compromising sensitivity, EU hosting, flexible deployment, no data training, with GDPR / EU AI Act / ISO 27001 marks
 8. **CTA** — design-partnership framing
 
 ## Copy rules baked into this page
